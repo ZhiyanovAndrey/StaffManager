@@ -1,4 +1,4 @@
-﻿using StaffManager.Model;
+﻿//using StaffManager.Model;
 using StaffManager.View;
 using System;
 using System.Collections.Generic;
@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace StaffManager.ViewModel
 {
@@ -73,15 +74,97 @@ namespace StaffManager.ViewModel
                 NotifyPropertyChanged("AllSpWorks");
             }
         }
+        #region COMMANDS TO OPEN WINDOWS
 
-        // Методы открытия окон
-
-        private void OpenAppDepartmentWindowMethod()
+        private bool CanAddCommandExecuted(object p)
         {
-            AddNewDepartmentWindow newDepartmentWindow = new AddNewDepartmentWindow();
+            if (Num != 0) return true; //команда доступна если не равно нулю, но обычно пишется return true
+            else return false;
+        }
+        public MainWindowViewModel()
+        {
+            AddCommand = new RelayCommand(OnAddCommandExecute, CanAddCommandExecuted); //действия которые мы определим в методах
+                                                                                       //через конструктор передадутся в команду
+                                                                                       //получится полноценная команда с 2-мя методами и событием
+
+        }
+    }
+
+    private RelayCommand openAddNewDepartmentWin;
+        public RelayCommand OpenAddNewDepartmentWin
+        {
+            get 
+            { 
+                return openAddNewDepartmentWin ?? new RelayCommand(obj =>
+                {
+                    OpenAppDepartmentWindowMethod();
+                }
+                );
+            }
         }
 
 
+        #endregion
+
+        // Методы открытия окон
+        #region OPEN WINDOW METHODS
+        private void OpenAppDepartmentWindowMethod()
+        {
+            AddNewDepartmentWindow newDepartmentWindow = new AddNewDepartmentWindow();
+            SelectCenterPositionAndOpen(newDepartmentWindow);
+        }
+
+        private void OpenAppPositionWindowMethod()
+        {
+            AddNewPosition newPositionWindow = new AddNewPosition();
+            SelectCenterPositionAndOpen(newPositionWindow);
+        }
+
+        private void OpenAppPersonWindowMethod()
+        {
+            AddNewPersonWindow newPersonWindow = new AddNewPersonWindow();
+            SelectCenterPositionAndOpen(newPersonWindow);
+        }
+
+        private void OpenAppSpecialWorkWindowMethod()
+        {
+            AddNewSpecialWorkWindow newSpecialWorkWindow = new AddNewSpecialWorkWindow();
+            SelectCenterPositionAndOpen(newSpecialWorkWindow);
+        }
+
+
+
+        private void OpenEditDepartmentWindowMethod()
+        {
+            EditDepartmentWindow newDepartmentWindow = new EditDepartmentWindow();
+            SelectCenterPositionAndOpen(newDepartmentWindow);
+        }
+
+        private void OpenEditPositionWindowMethod()
+        {
+            EditPositionWindow newPositionWindow = new EditPositionWindow();
+            SelectCenterPositionAndOpen(newPositionWindow);
+        }
+
+        private void OpenEditPersonWindowMethod()
+        {
+            EditPersonWindow newPersonWindow = new EditPersonWindow();
+            SelectCenterPositionAndOpen(newPersonWindow);
+        }
+
+        private void OpenEditSpecialWorkWindowMethod()
+        {
+            EditSpecialWorkWindow newSpecialWorkWindow = new EditSpecialWorkWindow();
+            SelectCenterPositionAndOpen(newSpecialWorkWindow);
+        }
+
+        private void SelectCenterPositionAndOpen(Window window)
+        {
+            window.Owner = Application.Current.MainWindow; // собственик - главное окно
+            window.WindowStartupLocation = WindowStartupLocation.CenterOwner; // открытие по центру
+            window.ShowDialog(); // не даст продолжить работу пока его не закроеш
+        }
+        #endregion
 
     }
 }

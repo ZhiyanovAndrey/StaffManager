@@ -28,7 +28,7 @@ namespace StaffManager.Model
 
 
         //// нотификационное полe не обязательные при создании БД, но обязательные при запросах FORAIGN KEY по одноименному столбцу .
-        //public int DepartmentId { get; set; } // DepartmentId создается автоматически необязательгое поле, что бы cod convension не допускал NULL 
+        //public int DepartmentId { get; set; } // DepartmentId создается автоматически необязательное поле, что бы cod convension не допускал NULL 
         //                                      // без него призапросе не сделать связь с таблицей Department, и при заполнении БД не задашь привязку (DepartmentId=1)
 
         //public Department Department { get; set; }   // без него не пропишешь отдел по названию (Department = РРУ)
