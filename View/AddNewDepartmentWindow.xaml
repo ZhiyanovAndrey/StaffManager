@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StaffManager.View"
         mc:Ignorable="d"
-        Title="AddNewDepartmentWindow" Height="300" Width="300">
+        Title="AddNewDepartmentWindow" Height="300" Width="300" 
+        Name="AddNewDepartmentWin">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -17,10 +18,13 @@
                     HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
 
             <TextBlock Text="Название отдела" HorizontalAlignment="Center"/>
-            <TextBox Text="" Padding="5"/>
+            <TextBox Name="NameTB" Text="{Binding DepartmentName}" Padding="5"/>
 
         </StackPanel>
-
-        <Button Grid.Row= "1" Content="Добавить отдел"/>
+        <!--привязка к свойству string DepartmentName в VM-->
+        <Button Grid.Row= "1" Content="Добавить отдел" Command="{Binding AddNewDepartment}" 
+            CommandParameter="{Binding ElementName=AddNewDepartmentWin}"/>
+        <!--привязка к свойству RelayCommand AddNewDepartmentWin, добавит все окно к команде -->
+    
     </Grid>
 </Window>

@@ -58,8 +58,10 @@
                 <ListView ItemsSource="{Binding AllDepartments}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Наименование отдела"/>
-                            <GridViewColumn Header="Количество перссонала"/>
+                            <GridViewColumn Header="Наименование отдела"
+                                            DisplayMemberBinding="{Binding Path=Name}"/> <!--укажем путь до свойства, иначе покажет весь обьект-->
+                            <GridViewColumn Header="Количество перссонала"
+                                            DisplayMemberBinding="{Binding Path=Positions.MaxNumber}"/> <!--так работать не будет Binding Path=Positions.Count}-->
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -81,10 +83,10 @@
         
         
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
-            <Button Content="Новый сотрудник" Command="{Binding}"/>
-            <Button Content="Новая позиция" Command="{Binding}"/>
-            <Button Content="Новый отдел" Command="{Binding}"/>
-            <Button Content="Новая спец.работа" Command="{Binding}"/>
+            <Button Content="Новый сотрудник" Command="{Binding OpenAddNewPersonWin}"/>
+            <Button Content="Новая позиция" Command="{Binding OpenAddNewPositionWin}"/>
+            <Button Content="Новый отдел" Command="{Binding OpenAddNewDepartmentWin}"/>
+            <Button Content="Новая спец.работа" Command="{Binding OpenAddNewSpecialWorkWin}"/>
         </StackPanel>
 
     </Grid>

@@ -1,4 +1,4 @@
-﻿//using StaffManager.Model;
+﻿using StaffManager.Model;
 using StaffManager.View;
 using System;
 using System.Collections.Generic;
@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace StaffManager.ViewModel
 {
@@ -22,8 +24,25 @@ namespace StaffManager.ViewModel
             }
         }
 
+        public string DepartmentName { get; set; }
 
-// все отделы
+        // метод вывода сообщения и закрытия окна
+        private void ShowMessage(string messege)
+        {
+           MessageView massageView = new MessageView(messege);
+            SelectCenterPositionAndOpen(massageView);
+        }
+
+
+        // метод обрамляет красным при ошибках
+        private void SetRedControl(Window wnd, string controlName)
+        {
+            Control blok = wnd.FindName(controlName) as Control;
+            blok.BorderBrush = Brushes.Red;
+        }
+
+        #region SHOW STAFF IN WINDOW
+        // все отделы
         private List<Department> allDepartments = StaffUnits.GetAllDepartment();
         public List<Department> AllDepartments
         {
@@ -36,7 +55,7 @@ namespace StaffManager.ViewModel
             }
         }
 
-// все сотрудники
+        // все сотрудники
         private List<Person> allPersons = StaffUnits.GetAllPerson();
         public List<Person> AllPersons
         {
@@ -74,37 +93,9 @@ namespace StaffManager.ViewModel
                 NotifyPropertyChanged("AllSpWorks");
             }
         }
-        #region COMMANDS TO OPEN WINDOWS
-
-        private bool CanAddCommandExecuted(object p)
-        {
-            if (Num != 0) return true; //команда доступна если не равно нулю, но обычно пишется return true
-            else return false;
-        }
-        public MainWindowViewModel()
-        {
-            AddCommand = new RelayCommand(OnAddCommandExecute, CanAddCommandExecuted); //действия которые мы определим в методах
-                                                                                       //через конструктор передадутся в команду
-                                                                                       //получится полноценная команда с 2-мя методами и событием
-
-        }
-    }
-
-    private RelayCommand openAddNewDepartmentWin;
-        public RelayCommand OpenAddNewDepartmentWin
-        {
-            get 
-            { 
-                return openAddNewDepartmentWin ?? new RelayCommand(obj =>
-                {
-                    OpenAppDepartmentWindowMethod();
-                }
-                );
-            }
-        }
-
-
         #endregion
+
+
 
         // Методы открытия окон
         #region OPEN WINDOW METHODS
@@ -164,6 +155,98 @@ namespace StaffManager.ViewModel
             window.WindowStartupLocation = WindowStartupLocation.CenterOwner; // открытие по центру
             window.ShowDialog(); // не даст продолжить работу пока его не закроеш
         }
+        #endregion
+
+        #region COMMANDS TO OPEN WINDOWS
+
+
+        private RelayCommand openAddNewDepartmentWin;
+        public RelayCommand OpenAddNewDepartmentWin // в VM делаем Binding к публичным командам
+        {
+            get
+            {
+                return openAddNewDepartmentWin ?? new RelayCommand(obj => // проверка непустой ли он если да то RelayComand
+                {
+                    OpenAppDepartmentWindowMethod();
+                }
+                );
+            }
+        }
+
+        private RelayCommand openAddNewPositionWin;
+        public RelayCommand OpenAddNewPositionWin
+        {
+            get
+            {
+                return openAddNewPositionWin ?? new RelayCommand(obj =>
+                {
+                    OpenAppPositionWindowMethod();
+                }
+                );
+            }
+        }
+
+        private RelayCommand openAddNewPersonWin;
+        public RelayCommand OpenAddNewPersonWin
+        {
+            get
+            {
+                return openAddNewPersonWin ?? new RelayCommand(obj =>
+                {
+                    OpenAppPersonWindowMethod();
+                }
+                );
+            }
+        }
+
+        private RelayCommand openAddNewSpecialWorkWin;
+        public RelayCommand OpenAddNewSpecialWorkWin // в VM делаем Binding к публичным командам
+        {
+            get
+            {
+                return openAddNewSpecialWorkWin ?? new RelayCommand(obj =>
+                {
+                    OpenAppSpecialWorkWindowMethod();
+                }
+                );
+            }
+        }
+
+        #endregion
+
+        #region COMMANDS TO ADD
+
+        private RelayCommand addNewDepartment;
+        public RelayCommand AddNewDepartment
+        {
+            get
+            {
+                return addNewDepartment ?? new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window; // объявляем wnd, что бы в качестве объекта в эту команду передать само окно
+                                                // добавим CommandParameter к кнопке которая добавит все окно к команде
+                    string resultstring = string.Empty;
+
+                    if (DepartmentName == null || DepartmentName.Replace(" ", "").Length ==0)
+                    {
+                        SetRedControl(wnd, "NameTB");
+                    }
+                    else
+                    {
+                    resultstring = StaffUnits.CreateDepartment(DepartmentName); // взять текст из свойства DepartmentName,
+                                                                                // а св-во в текущем классе связываем с пом. DataContext = new StaffManagerVM();
+                        ShowMessage(resultstring);
+                        wnd.Close();
+
+
+                    }
+
+
+                }
+                );
+            }
+        }
+
         #endregion
 
     }

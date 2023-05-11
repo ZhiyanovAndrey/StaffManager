@@ -17,11 +17,17 @@ namespace StaffManager.View
     /// <summary>
     /// Логика взаимодействия для MassageView.xaml
     /// </summary>
-    public partial class MassageView : Window
+    public partial class MessageView : Window
     {
-        public MassageView()
+        public MessageView(string text) // прилетит из конструктора в VM, задаем параметры конструктора прямо здесь
         {
             InitializeComponent();
+            MessageText.Text = text; // передаст текст в TextBlock x:Name="MessageText
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }
