@@ -29,7 +29,7 @@ namespace StaffManager.ViewModel
         // метод вывода сообщения и закрытия окна
         private void ShowMessage(string messege)
         {
-           MessageView massageView = new MessageView(messege);
+            MessageView massageView = new MessageView(messege);
             SelectCenterPositionAndOpen(massageView);
         }
 
@@ -227,15 +227,16 @@ namespace StaffManager.ViewModel
                                                 // добавим CommandParameter к кнопке которая добавит все окно к команде
                     string resultstring = string.Empty;
 
-                    if (DepartmentName == null || DepartmentName.Replace(" ", "").Length ==0)
+                    if (DepartmentName == null || DepartmentName.Replace(" ", "").Length == 0)  // если одни пробелы или пусто то подсвечивает красным
                     {
                         SetRedControl(wnd, "NameTB");
                     }
                     else
                     {
-                    resultstring = StaffUnits.CreateDepartment(DepartmentName); // взять текст из свойства DepartmentName,
-                                                                                // а св-во в текущем классе связываем с пом. DataContext = new StaffManagerVM();
+                        resultstring = StaffUnits.CreateDepartment(DepartmentName); // взять текст из свойства DepartmentName,
+                                                                                    // а св-во в текущем классе связываем с пом. DataContext = new StaffManagerVM();
                         ShowMessage(resultstring);
+                        UpdateAll();
                         wnd.Close();
 
 
@@ -249,5 +250,57 @@ namespace StaffManager.ViewModel
 
         #endregion
 
+        #region UPDATE WINDOW METHODS
+
+        // наполняем статичные свойства в гл.окне
+        private void UpdateAll()
+        {
+            UpdateAllDepartmentsWin();
+
+
+
+        }
+
+        private void UpdateAllDepartmentsWin()
+        {                                                   // св-во в vm c привязкой к NotifyPropertyChanged("AllPersons")
+            AllDepartments = StaffUnits.GetAllDepartment(); // обновляем AllDepartments, но еще необходимо обновить весь View
+                                                            // добавим в MainWindow.xaml.cs статичные поля
+                                                            // привяжем их к свойствам ListView x:Name="ViewAllPositions"
+                                                            // в MainWindow.xaml.sc наполним их после инициализации
+                                                            
+            MainWindow.AllDepartmentsView.ItemsSource = null; // очищаем список
+            MainWindow.AllDepartmentsView.Items.Clear(); 
+            MainWindow.AllDepartmentsView.ItemsSource = AllDepartments; // наполнили
+            MainWindow.AllDepartmentsView.Items.Refresh();
+        }
+
+        private void UpdateAllPositionsWin()
+        {
+            AllPositions = StaffUnits.GetAllPosition();  
+            MainWindow.AllPositionsView.ItemsSource = null; 
+            MainWindow.AllPositionsView.Items.Clear();
+            MainWindow.AllPositionsView.ItemsSource = AllDepartments;
+            MainWindow.AllPositionsView.Items.Refresh();
+        }
+
+        private void UpdateAllPersonsWin()
+        {
+            AllPersons = StaffUnits.GetAllPerson();
+            MainWindow.AllPersonsView.ItemsSource = null; // наполнили обнулили и добавили
+            MainWindow.AllPersonsView.Items.Clear();
+            MainWindow.AllPersonsView.ItemsSource = AllDepartments;
+            MainWindow.AllPersonsView.Items.Refresh();
+        }
+
+        private void UpdateAllSpWorksWin()
+        {
+            AllSpWorks = StaffUnits.GetAllSpWork();
+            MainWindow.AllSpWorksView.ItemsSource = null; // наполнили обнулили и добавили
+            MainWindow.AllSpWorksView.Items.Clear();
+            MainWindow.AllSpWorksView.ItemsSource = AllDepartments;
+            MainWindow.AllSpWorksView.Items.Refresh();
+        }
+
+        #endregion
     }
 }

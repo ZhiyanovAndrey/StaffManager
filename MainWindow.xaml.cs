@@ -21,10 +21,20 @@ namespace StaffManager
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static ListView AllDepartmentsView; // поля добавятся после инициализации и свяжутся со свойствами MainWindow
+                                                   // ViewAllDepartments
+        public static ListView AllPositionsView;
+        public static ListView AllPersonsView;
+        public static ListView AllSpWorksView;
+
         public MainWindow()
         {
             InitializeComponent();
             DataContext = new StaffManagerVM();
+            AllDepartmentsView = ViewAllDepartmens; // наполняем свойства в MainWindow.xaml.sc 
+            AllPersonsView = ViewAllPersons;
+            AllPositionsView = ViewAllPositions;
+            AllSpWorksView = ViewAllSpWorks;
         }
     }
 }

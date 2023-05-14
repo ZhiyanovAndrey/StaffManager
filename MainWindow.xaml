@@ -17,7 +17,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Персонал"/>
                 </TabItem.Header>
-                <ListView ItemsSource="{Binding AllPersons}">
+                <ListView x:Name="ViewAllPersons" ItemsSource="{Binding AllPersons}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Фамилия"/>
@@ -38,7 +38,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Должность"/>
                 </TabItem.Header>
-                <ListView ItemsSource="{Binding AllPositions}">
+                <ListView x:Name="ViewAllPositions" ItemsSource="{Binding AllPositions}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Наименование должности"/>
@@ -55,7 +55,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Отдел"/>
                 </TabItem.Header>
-                <ListView ItemsSource="{Binding AllDepartments}">
+                <ListView x:Name="ViewAllDepartmens" ItemsSource="{Binding AllDepartments}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Наименование отдела"
@@ -71,7 +71,7 @@
                 <TabItem.Header>
                     <TextBlock Text="Спец.работы"/>
                 </TabItem.Header>
-                <ListView ItemsSource="{Binding AllSpWorks}">
+                <ListView x:Name="ViewAllSpWorks" ItemsSource="{Binding AllSpWorks}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Наименование спец.работы"/>
