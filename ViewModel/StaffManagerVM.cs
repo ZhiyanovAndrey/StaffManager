@@ -24,12 +24,20 @@ namespace StaffManager.ViewModel
             }
         }
 
-        public string DepartmentName { get; set; }
+        public string DepartmentName { get; set; }  // свойство для работы с командой
 
-        // метод вывода сообщения и закрытия окна
-        private void ShowMessage(string messege)
+        // 
+        private void SetNullValuesToPropeties()
         {
-            MessageView massageView = new MessageView(messege);
+            DepartmentName = null;
+        }
+        
+        
+        // метод вывода сообщения и закрытия окна
+        private void ShowMessage(string massage)
+        {
+            MessageView massageView = new MessageView(massage); // передаем текст в наше окно MessageView
+                                                                // там делаем конструктор и передаем текст в TB окна
             SelectCenterPositionAndOpen(massageView);
         }
 
@@ -40,6 +48,51 @@ namespace StaffManager.ViewModel
             Control blok = wnd.FindName(controlName) as Control;
             blok.BorderBrush = Brushes.Red;
         }
+
+
+  #region COMMANDS TO ADD
+
+        private RelayCommand addNewDepartment;
+        public RelayCommand AddNewDepartment
+        {
+            get
+            {
+                return addNewDepartment ?? new RelayCommand(obj =>
+                {
+                    /* DepartmentName своиство кнопки Binding AddNewDepartment в окне AddNewDepartmentWindow
+                       делаем проверки и вызываем метод CreateDepartment(DepartmentName) передав ему Name
+                       что бы передать DepartmentName создадим свойство выше и делаем Binding DepartmentName 
+                       в TB окна AddNewDepartmentWindow не забыть про DataContext= new StaffManagerVM()
+                    */
+
+                    Window wnd = obj as Window; // объявляем wnd, что бы в качестве объекта в эту команду передать само окно
+                                                // добавим CommandParameter к кнопке которая добавит все окно к команде
+                    string resultstring = string.Empty;
+
+                    if (DepartmentName == null || DepartmentName.Replace(" ", "").Length == 0)  // если одни пробелы или пусто то подсвечивает красным
+                    {
+                        SetRedControl(wnd, "NameTB");
+                    }
+                    else
+                    {
+                        resultstring = StaffUnits.CreateDepartment(DepartmentName); // взять текст из свойства DepartmentName,
+                                                                                    // а св-во в текущем классе связываем с пом. DataContext = new StaffManagerVM();
+                        ShowMessage(resultstring);
+                        UpdateAll();
+                        //SetNullValuesToPropeties();
+                        wnd.Close();
+
+
+                    }
+
+
+                }
+                );
+            }
+        }
+
+        #endregion
+
 
         #region SHOW STAFF IN WINDOW
         // все отделы
@@ -214,41 +267,7 @@ namespace StaffManager.ViewModel
 
         #endregion
 
-        #region COMMANDS TO ADD
-
-        private RelayCommand addNewDepartment;
-        public RelayCommand AddNewDepartment
-        {
-            get
-            {
-                return addNewDepartment ?? new RelayCommand(obj =>
-                {
-                    Window wnd = obj as Window; // объявляем wnd, что бы в качестве объекта в эту команду передать само окно
-                                                // добавим CommandParameter к кнопке которая добавит все окно к команде
-                    string resultstring = string.Empty;
-
-                    if (DepartmentName == null || DepartmentName.Replace(" ", "").Length == 0)  // если одни пробелы или пусто то подсвечивает красным
-                    {
-                        SetRedControl(wnd, "NameTB");
-                    }
-                    else
-                    {
-                        resultstring = StaffUnits.CreateDepartment(DepartmentName); // взять текст из свойства DepartmentName,
-                                                                                    // а св-во в текущем классе связываем с пом. DataContext = new StaffManagerVM();
-                        ShowMessage(resultstring);
-                        UpdateAll();
-                        wnd.Close();
-
-
-                    }
-
-
-                }
-                );
-            }
-        }
-
-        #endregion
+      
 
         #region UPDATE WINDOW METHODS
 
@@ -256,9 +275,9 @@ namespace StaffManager.ViewModel
         private void UpdateAll()
         {
             UpdateAllDepartmentsWin();
-
-
-
+            UpdateAllPositionsWin();
+            UpdateAllPersonsWin();
+            UpdateAllSpWorksWin();
         }
 
         private void UpdateAllDepartmentsWin()
@@ -267,17 +286,17 @@ namespace StaffManager.ViewModel
                                                             // добавим в MainWindow.xaml.cs статичные поля
                                                             // привяжем их к свойствам ListView x:Name="ViewAllPositions"
                                                             // в MainWindow.xaml.sc наполним их после инициализации
-                                                            
+
             MainWindow.AllDepartmentsView.ItemsSource = null; // очищаем список
-            MainWindow.AllDepartmentsView.Items.Clear(); 
+            MainWindow.AllDepartmentsView.Items.Clear();
             MainWindow.AllDepartmentsView.ItemsSource = AllDepartments; // наполнили
             MainWindow.AllDepartmentsView.Items.Refresh();
         }
 
         private void UpdateAllPositionsWin()
         {
-            AllPositions = StaffUnits.GetAllPosition();  
-            MainWindow.AllPositionsView.ItemsSource = null; 
+            AllPositions = StaffUnits.GetAllPosition();
+            MainWindow.AllPositionsView.ItemsSource = null;
             MainWindow.AllPositionsView.Items.Clear();
             MainWindow.AllPositionsView.ItemsSource = AllDepartments;
             MainWindow.AllPositionsView.Items.Refresh();

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:StaffManager.View"
         mc:Ignorable="d"
         Title="AddNewDepartmentWindow" Height="300" Width="300" 
-        Name="AddNewDepartmentWin">
+        Name="AddNewDepartmentWin"> <!--необходимо для привязки ниже-->
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>

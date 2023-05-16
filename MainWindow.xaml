@@ -60,6 +60,8 @@
                         <GridView>
                             <GridViewColumn Header="Наименование отдела"
                                             DisplayMemberBinding="{Binding Path=Name}"/> <!--укажем путь до свойства, иначе покажет весь обьект-->
+                            <!--с помощью свойства Header определяет название столбца, а с помощью свойства DisplayMemberBinding можно определить 
+                            привязку столбца к определенному свойству добавляемого в ListView объекта.-->
                             <GridViewColumn Header="Количество перссонала"
                                             DisplayMemberBinding="{Binding Path=Positions.MaxNumber}"/> <!--так работать не будет Binding Path=Positions.Count}-->
                         </GridView>

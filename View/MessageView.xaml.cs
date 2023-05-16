@@ -25,7 +25,7 @@ namespace StaffManager.View
             MessageText.Text = text; // передаст текст в TextBlock x:Name="MessageText
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void Button_Click(object sender, RoutedEventArgs e) // можно делать через Комманд, но сейчас это не обязательно
         {
             this.Close();
         }
