@@ -23,16 +23,34 @@ namespace StaffManager.ViewModel
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+        // свойства для работы с командами
+        public string DepartmentName { get; set; }
 
-        public string DepartmentName { get; set; }  // свойство для работы с командой
+        public string SpWorkName { get; set; }
 
-        // 
+        public string PositionName { get; set; }
+        public decimal PositionSalary { get; set; }
+        public int PositionMaxNumber { get; set; }
+        public Department PositionDepartment { get; set; }
+
+        public string PersonSurName { get; set; }
+        public string PersonName { get; set; }
+        public string PersonFirdName { get; set; }
+        public string PersonPhone { get; set; }
+        public Position PersonPosition { get; set; }
+        public SpecialWork PersonSpWork { get; set; }
+
+        // метод обнуляет все свойства
         private void SetNullValuesToPropeties()
         {
             DepartmentName = null;
+            PositionName = null;
+            PositionSalary = 0;
+            PositionMaxNumber = 0;
+            PositionDepartment = null;
         }
-        
-        
+
+
         // метод вывода сообщения и закрытия окна
         private void ShowMessage(string massage)
         {
@@ -50,7 +68,7 @@ namespace StaffManager.ViewModel
         }
 
 
-  #region COMMANDS TO ADD
+        #region COMMANDS TO ADD
 
         private RelayCommand addNewDepartment;
         public RelayCommand AddNewDepartment
@@ -79,18 +97,61 @@ namespace StaffManager.ViewModel
                                                                                     // а св-во в текущем классе связываем с пом. DataContext = new StaffManagerVM();
                         ShowMessage(resultstring);
                         UpdateAll();
-                        //SetNullValuesToPropeties();
+                        SetNullValuesToPropeties(); // обнулим DepartmentName
                         wnd.Close();
-
-
                     }
-
-
                 }
                 );
             }
         }
 
+
+        private RelayCommand addNewPosition;
+        public RelayCommand AddNewPosition
+        {
+            get
+            {
+                return addNewPosition ?? new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultstring = string.Empty;
+                    /* 
+                     * не забыть в AddNewPositionWindow (у меня AddNewPosition)
+                     * сделать Binding PositionName и наименование соответствующего ТВ x:Name="NameTB"
+                     * сделать  Command="{Binding AddNewPosition}" для привязки к команде
+                     * и CommandParameter="{Binding ElementName=AddNewPositionWin}" для привязки всего окна дать имя окну
+                     * прописать в Combobox  DisplayMemberPath="Name" для отображений только имени, а не класса
+                     * прописать в ListView.View ко всем полям соответственно DisplayMemberBinding="{Binding Path=Name}
+                     */
+                    if (PositionName == null || PositionName.Replace(" ", "").Length == 0)
+                    {
+                        SetRedControl(wnd, "NameTB");
+                    }
+                    if (PositionSalary == 0)
+                    {
+                        SetRedControl(wnd, "SalaryTB");
+                    }
+                    if (PositionMaxNumber == 0)
+                    {
+                        SetRedControl(wnd, "MaxNumberTB");
+                    }
+                    //if (PositionDepartment == null)
+                    //{
+                    //    MessageBox.Show("Укажите отдел");
+                    //}
+                    else
+                    {
+                        resultstring = StaffUnits.CreatePosition(PositionName, PositionSalary, PositionMaxNumber, PositionDepartment);
+                                               // а св-вa в текущем классе связываем с пом. DataContext = new StaffManagerVM();
+                        ShowMessage(resultstring);
+                        UpdateAll();
+                        SetNullValuesToPropeties(); // обнулим все поля
+                        wnd.Close();
+                    }
+                }
+                );
+            }
+        }
         #endregion
 
 
@@ -267,7 +328,7 @@ namespace StaffManager.ViewModel
 
         #endregion
 
-      
+
 
         #region UPDATE WINDOW METHODS
 
@@ -276,8 +337,8 @@ namespace StaffManager.ViewModel
         {
             UpdateAllDepartmentsWin();
             UpdateAllPositionsWin();
-            UpdateAllPersonsWin();
-            UpdateAllSpWorksWin();
+            //UpdateAllPersonsWin();
+            //UpdateAllSpWorksWin();
         }
 
         private void UpdateAllDepartmentsWin()
@@ -298,7 +359,7 @@ namespace StaffManager.ViewModel
             AllPositions = StaffUnits.GetAllPosition();
             MainWindow.AllPositionsView.ItemsSource = null;
             MainWindow.AllPositionsView.Items.Clear();
-            MainWindow.AllPositionsView.ItemsSource = AllDepartments;
+            MainWindow.AllPositionsView.ItemsSource = AllPositions;
             MainWindow.AllPositionsView.Items.Refresh();
         }
 
@@ -307,7 +368,7 @@ namespace StaffManager.ViewModel
             AllPersons = StaffUnits.GetAllPerson();
             MainWindow.AllPersonsView.ItemsSource = null; // наполнили обнулили и добавили
             MainWindow.AllPersonsView.Items.Clear();
-            MainWindow.AllPersonsView.ItemsSource = AllDepartments;
+            MainWindow.AllPersonsView.ItemsSource = AllPersons;
             MainWindow.AllPersonsView.Items.Refresh();
         }
 
@@ -316,7 +377,7 @@ namespace StaffManager.ViewModel
             AllSpWorks = StaffUnits.GetAllSpWork();
             MainWindow.AllSpWorksView.ItemsSource = null; // наполнили обнулили и добавили
             MainWindow.AllSpWorksView.Items.Clear();
-            MainWindow.AllSpWorksView.ItemsSource = AllDepartments;
+            MainWindow.AllSpWorksView.ItemsSource = AllSpWorks;
             MainWindow.AllSpWorksView.Items.Refresh();
         }
 

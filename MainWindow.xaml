@@ -41,11 +41,14 @@
                 <ListView x:Name="ViewAllPositions" ItemsSource="{Binding AllPositions}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Наименование должности"/>
-                            <GridViewColumn Header="Зарплата"/>
-                            <GridViewColumn Header="Количество перссонала"/>
-                            <GridViewColumn Header="Максимально возможное количество персонала"/>
-                            <GridViewColumn Header="Отдел"/>
+                            <GridViewColumn Header="Наименование должности" 
+                                            DisplayMemberBinding="{Binding Path=Name}"/>
+                            <GridViewColumn Header="Зарплата"
+                                            DisplayMemberBinding="{Binding Path=Salary}"/>
+                            <GridViewColumn Header="Максимально возможное количество персонала"
+                                            DisplayMemberBinding="{Binding Path=MaxNumber}"/>
+                            <GridViewColumn Header="Отдел"
+                                            DisplayMemberBinding="{Binding Path=Department}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

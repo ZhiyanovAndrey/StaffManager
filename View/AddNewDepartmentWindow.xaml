@@ -22,9 +22,10 @@
 
         </StackPanel>
         <!--привязка к свойству string DepartmentName в VM-->
-        <Button Grid.Row= "1" Content="Добавить отдел" Command="{Binding AddNewDepartment}" 
-            CommandParameter="{Binding ElementName=AddNewDepartmentWin}"/>
-        <!--привязка к свойству RelayCommand AddNewDepartmentWin, добавит все окно к команде -->
+        <Button Grid.Row= "1" Content="Добавить отдел"
+                Command="{Binding AddNewDepartment}" 
+                CommandParameter="{Binding ElementName=AddNewDepartmentWin}"/>
+        <!--привязка к имени окна  добавит все окно к команде-->
     
     </Grid>
 </Window>
