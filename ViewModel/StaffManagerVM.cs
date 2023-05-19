@@ -37,6 +37,7 @@ namespace StaffManager.ViewModel
         public string PersonName { get; set; }
         public string PersonFirdName { get; set; }
         public string PersonPhone { get; set; }
+        public DateTime PersonBirthday { get; set; }
         public Position PersonPosition { get; set; }
         public SpecialWork PersonSpWork { get; set; }
 
@@ -70,6 +71,53 @@ namespace StaffManager.ViewModel
 
         #region COMMANDS TO ADD
 
+        private RelayCommand addNewPerson;
+        public RelayCommand AddNewPerson
+        {
+            get
+            {
+                return addNewPerson ?? new RelayCommand(obj =>
+                {
+                    Window wnd = obj as Window;
+                    string resultstring = string.Empty;
+                    /* 
+                     * не забыть в AddNewPersonWindow сделать  Command="{Binding AddNewPerson}" для привязки к команде
+                     * сделать Binding PersonName и наименование соответствующего ТВ x:Name="NameTB" и всех остальных полей
+                     * <ComboBox ItemsSource="{Binding AllPositions}"
+                     * и CommandParameter="{Binding ElementName=AddNewPositionWin}" для привязки всего окна дать имя окну
+                     * прописать в Combobox  DisplayMemberPath="Name" для отображений только имени, а не класса
+                     * прописать в ListView.View ко всем полям соответственно DisplayMemberBinding="{Binding Path=Name}
+                     */
+                    if (PersonSurName == null || PersonName.Replace(" ", "").Length == 0)
+                    {
+                        SetRedControl(wnd, "SurNameTB");
+                    }
+                    if (PersonName == null || PersonName.Replace(" ", "").Length == 0)
+                    {
+                        SetRedControl(wnd, "NameTB");
+                    }
+                    if (PersonPosition == null)
+                    {
+                        MessageBox.Show("Укажите должность");
+                    }
+
+                    else
+                    {
+                        resultstring = StaffUnits.CreatePerson(PersonSurName, PersonName, PersonFirdName, PersonPhone, 
+                                                    PersonBirthday, PersonPosition);
+                        // а св-вa в текущем классе связываем с пом. DataContext = new StaffManagerVM();
+                        ShowMessage(resultstring);
+                        UpdateAll();
+                        SetNullValuesToPropeties(); // обнулим все поля
+                        wnd.Close();
+                    }
+                }
+                );
+            }
+        }
+
+
+
         private RelayCommand addNewDepartment;
         public RelayCommand AddNewDepartment
         {
@@ -77,7 +125,7 @@ namespace StaffManager.ViewModel
             {
                 return addNewDepartment ?? new RelayCommand(obj =>
                 {
-                    /* DepartmentName своиство кнопки Binding AddNewDepartment в окне AddNewDepartmentWindow
+                    /* DepartmentName свойство кнопки Binding AddNewDepartment в окне AddNewDepartmentWindow
                        делаем проверки и вызываем метод CreateDepartment(DepartmentName) передав ему Name
                        что бы передать DepartmentName создадим свойство выше и делаем Binding DepartmentName 
                        в TB окна AddNewDepartmentWindow не забыть про DataContext= new StaffManagerVM()
@@ -135,13 +183,13 @@ namespace StaffManager.ViewModel
                     {
                         SetRedControl(wnd, "MaxNumberTB");
                     }
-                    //if (PositionDepartment == null)
-                    //{
-                    //    MessageBox.Show("Укажите отдел");
-                    //}
+                    if (PositionDepartment == null)
+                    {
+                        MessageBox.Show("Укажите отдел");
+                    }
                     else
                     {
-                        resultstring = StaffUnits.CreatePosition(PositionName, PositionSalary, PositionMaxNumber, PositionDepartment);
+                        resultstring = StaffUnits.CreatePosition(PositionName, PositionSalary, PositionDepartment, PositionMaxNumber);
                                                // а св-вa в текущем классе связываем с пом. DataContext = new StaffManagerVM();
                         ShowMessage(resultstring);
                         UpdateAll();
@@ -210,8 +258,6 @@ namespace StaffManager.ViewModel
         #endregion
 
 
-
-        // Методы открытия окон
         #region OPEN WINDOW METHODS
         private void OpenAppDepartmentWindowMethod()
         {
@@ -326,6 +372,8 @@ namespace StaffManager.ViewModel
             }
         }
 
+  
+
         #endregion
 
 
@@ -337,8 +385,8 @@ namespace StaffManager.ViewModel
         {
             UpdateAllDepartmentsWin();
             UpdateAllPositionsWin();
-            //UpdateAllPersonsWin();
-            //UpdateAllSpWorksWin();
+            UpdateAllPersonsWin();
+            UpdateAllSpWorksWin();
         }
 
         private void UpdateAllDepartmentsWin()

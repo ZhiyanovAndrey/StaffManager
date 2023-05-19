@@ -20,15 +20,22 @@
                 <ListView x:Name="ViewAllPersons" ItemsSource="{Binding AllPersons}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Фамилия"/>
-                            <GridViewColumn Header="Имя"/>
-                            <GridViewColumn Header="Отчество"/>
-                            <GridViewColumn Header="Телефон"/>
-                            <GridViewColumn Header="Должность"/>
-                            <GridViewColumn Header="Зарплата"/>
-                            <GridViewColumn Header="Отдел"/>
-                            <GridViewColumn Header="Дата рождения"/>
-                            <GridViewColumn Header="Возраст"/>
+                            <GridViewColumn Header="Фамилия"
+                                            DisplayMemberBinding="{Binding Path=SurName}"/>
+                            <GridViewColumn Header="Имя"
+                                            DisplayMemberBinding="{Binding Path=Name}"/>
+                            <GridViewColumn Header="Отчество"
+                                            DisplayMemberBinding="{Binding Path=FirdName}"/>
+                            <GridViewColumn Header="Телефон"
+                                            DisplayMemberBinding="{Binding Path=Phone}"/>
+                            <GridViewColumn Header="Должность"
+                                            DisplayMemberBinding="{Binding Path=Position}"/>
+                            <GridViewColumn Header="Спец.работы"
+                                            DisplayMemberBinding="{Binding Path=SpecialWorks}"/>
+                            <GridViewColumn Header="Дата рождения"
+                                            DisplayMemberBinding="{Binding Path=Birthday}"/>
+                            <GridViewColumn Header="Возраст"
+                                            DisplayMemberBinding="{Binding Path=Age}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
@@ -45,10 +52,10 @@
                                             DisplayMemberBinding="{Binding Path=Name}"/>
                             <GridViewColumn Header="Зарплата"
                                             DisplayMemberBinding="{Binding Path=Salary}"/>
-                            <GridViewColumn Header="Максимально возможное количество персонала"
-                                            DisplayMemberBinding="{Binding Path=MaxNumber}"/>
                             <GridViewColumn Header="Отдел"
                                             DisplayMemberBinding="{Binding Path=Department}"/>
+                            <GridViewColumn Header="Максимально возможное количество персонала"
+                                            DisplayMemberBinding="{Binding Path=MaxNumber}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

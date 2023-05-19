@@ -65,7 +65,7 @@ namespace StaffManager.Model
 
 
         // создать позицию
-        public static string CreatePosition(string name, decimal salary, int maxNumber, Department department)
+        public static string CreatePosition(string name, decimal salary, Department department, int maxNumber)
         {
             string result = "Уже существует";
             using (Context context = new Context())
@@ -73,7 +73,10 @@ namespace StaffManager.Model
                 bool CheckIsExist = context.Positions.Any(p => p.Name == name && p.Salary == salary);
                 if (!CheckIsExist)
                 {
-                    Position newPosition = new Position { Name = name, Salary = salary, MaxNumber = maxNumber, DepartmentId = department.Id };
+                    Position newPosition = new Position 
+                    { 
+                        Name = name, Salary = salary, MaxNumber = maxNumber, DepartmentId = department.Id 
+                    };
                     context.Positions.Add(newPosition);
                     context.SaveChanges();
                     result = "Сделано";
@@ -83,17 +86,18 @@ namespace StaffManager.Model
         }
 
         // создать сотрудника
-        public static string CreatePerson(string name)
+        public static string CreatePerson(string surname, string name, string firdname, string phone, DateTime birthday, Position position)
         {
             string result = "Уже существует";
             using (Context context = new Context())
             {
-                bool CheckIsExist = context.Departments.Any(p => p.Name == name); // существует ли сотрудник ???добавить ФИО позицию
+                bool CheckIsExist = context.Persons.Any(p => p.SurName == surname && p.Name == name && p.FirdName == firdname); // существует ли сотрудник ???добавить ФИО позицию
                 if (!CheckIsExist)
                 {
                     Person newPerson = new Person
                     {
-                        Name = name //  переписать все из класса
+                        Name = name, SurName=surname, FirdName=firdname, Phone=phone,
+                        Birthday=birthday, PositionId=position.Id
                     };
                     context.Persons.Add(newPerson);
                     context.SaveChanges();
