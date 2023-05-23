@@ -20,7 +20,7 @@
             <TextBlock Text="Наименование должности"/>
             <TextBox x:Name="NameTB" Text="{Binding PositionName}"/>
             <TextBlock Text="Зарплата"/>
-            <TextBox x:Name="SalaryTB" Text="{Binding PositionSalary}"/>
+            <TextBox x:Name="SalaryTB" PreviewTextInput="PreviewTextInput" Text="{Binding PositionSalary}"/>
             <TextBlock Text="Максимально возможное количество персонала" TextWrapping="Wrap"/>
             <TextBox x:Name="MaxNumberTB" Text="{Binding PositionMaxNumber}"/>
             <TextBlock Text="Отдел"/>

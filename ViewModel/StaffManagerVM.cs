@@ -85,7 +85,8 @@ namespace StaffManager.ViewModel
                      * сделать Binding PersonName и наименование соответствующего ТВ x:Name="NameTB" и всех остальных полей
                      * <ComboBox ItemsSource="{Binding AllPositions}"
                      * и CommandParameter="{Binding ElementName=AddNewPositionWin}" для привязки всего окна дать имя окну
-                     * прописать в Combobox  DisplayMemberPath="Name" для отображений только имени, а не класса
+                     * прописать в Combobox  ItemsSource="{Binding AllPositions}" и DisplayMemberPath="Name" для отображения всех только имени, а не класса
+                     * SelectedItem="{Binding PersonPosition}" для помещения выбранной позиции в одноименное свойство.
                      * прописать в ListView.View ко всем полям соответственно DisplayMemberBinding="{Binding Path=Name}
                      */
                     if (PersonSurName == null || PersonName.Replace(" ", "").Length == 0)

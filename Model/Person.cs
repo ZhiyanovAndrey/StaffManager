@@ -26,15 +26,15 @@ namespace StaffManager.Model
 
         public ICollection<SpecialWork> SpecialWorks { get; set; }
 
+        [NotMapped]
+        public Position PersonPosition 
+        {
+            get 
+            {
+                return StaffUnits.GetPositionById(PositionId); // что бы получить позицию по ID, создадим метод который получает позицию по Id
+            }
 
-        //// нотификационное полe не обязательные при создании БД, но обязательные при запросах FORAIGN KEY по одноименному столбцу .
-        //public int DepartmentId { get; set; } // DepartmentId создается автоматически необязательное поле, что бы cod convension не допускал NULL 
-        //                                      // без него призапросе не сделать связь с таблицей Department, и при заполнении БД не задашь привязку (DepartmentId=1)
-
-        //public Department Department { get; set; }   // без него не пропишешь отдел по названию (Department = РРУ)
-        // указывается в запросе JOIN Department к Person
-
-
+        }
 
         // расчет возраста
         public static int Age(DateTime Birthday)

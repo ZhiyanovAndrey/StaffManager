@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,7 +18,24 @@ namespace StaffManager.Model
 
         public ICollection<Position> Positions { get; set; }
 
+
+        // отображает все позиции по Id отдела, метод дает возможность раскрытия списка
+        [NotMapped]
+        public List<Position> DepartmentPosition
+        {
+            get
+            {
+                return StaffUnits.GetPositionByDepartmentId(Id);    
+            }
+
+        }
+
+
+
         //public ICollection<Person> Persons { get; set; } // связь с таблицей Person по одноименному столбцу, без него нет Primary Key
-                                                         // в Department может быть много Person
+        // в Department может быть много Person
+
+
+
     }
 }

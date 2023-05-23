@@ -276,8 +276,64 @@ namespace StaffManager.Model
 
         }
 
-  
-        
+        // возраст
+        public static int AgeCount(DateTime Birthday)
+        {
+            int age = DateTime.Now.Year - Birthday.Year;
+
+
+            return age;
+        }
+
+        // получить позицию по id 
+        public static Position GetPositionById(int id) 
+        {
+            using (Context context = new Context()) 
+            {
+               return context.Positions.FirstOrDefault(p => p.Id == id);
+            }
+        }
+
+        // получить отдел по id 
+        public static Department GetDepartmentById(int id)
+        {
+            using (Context context = new Context())
+            {
+                return context.Departments.FirstOrDefault(p => p.Id == id);
+            }
+        }
+
+        // получение всех сотрудников по Id позиции
+        public static List<Person> GetPersonByPositionId(int id)
+        {
+            using (Context context = new Context())
+            {
+                List<Person> query= (from person in GetAllPerson()
+                                    where person.PositionId == id
+                                    select person).ToList();
+
+                //List<Person> query = GetAllPosition().Select(p => p.Id == id);
+
+
+                return query;
+            }
+        }
+
+        // получить все позиции по id отдела
+        public static List<Position> GetPositionByDepartmentId(int id)
+        {
+            using (Context context = new Context())
+            {
+                List<Position> query = (from p in GetAllPosition()
+                                        where p.DepartmentId == id
+                                        select p).ToList();
+
+                //List<Person> query = GetAllPosition().Select(p => p.Id == id);
+
+
+                return query;
+            }
+        }
 
     }
 }

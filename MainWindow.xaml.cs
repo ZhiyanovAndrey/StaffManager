@@ -36,5 +36,6 @@ namespace StaffManager
             AllPositionsView = ViewAllPositions;
             AllSpWorksView = ViewAllSpWorks;
         }
+       
     }
 }

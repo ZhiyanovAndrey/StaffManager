@@ -29,7 +29,11 @@
                             <GridViewColumn Header="Телефон"
                                             DisplayMemberBinding="{Binding Path=Phone}"/>
                             <GridViewColumn Header="Должность"
-                                            DisplayMemberBinding="{Binding Path=Position}"/>
+                                            DisplayMemberBinding="{Binding Path=PersonPosition.Name}"/>
+                            <GridViewColumn Header="Зарплата"
+                                            DisplayMemberBinding="{Binding Path=Position.Salary}"/>
+                            <GridViewColumn Header="Отдел"
+                                            DisplayMemberBinding="{Binding Path=Department.Name}"/>
                             <GridViewColumn Header="Спец.работы"
                                             DisplayMemberBinding="{Binding Path=SpecialWorks}"/>
                             <GridViewColumn Header="Дата рождения"
@@ -53,7 +57,9 @@
                             <GridViewColumn Header="Зарплата"
                                             DisplayMemberBinding="{Binding Path=Salary}"/>
                             <GridViewColumn Header="Отдел"
-                                            DisplayMemberBinding="{Binding Path=Department}"/>
+                                            DisplayMemberBinding="{Binding Path=PositionDepartment.Name}"/>
+                            <GridViewColumn Header="Количество персонала"
+                                            DisplayMemberBinding="{Binding Path=Person.Count}"/>
                             <GridViewColumn Header="Максимально возможное количество персонала"
                                             DisplayMemberBinding="{Binding Path=MaxNumber}"/>
                         </GridView>
@@ -69,11 +75,12 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Наименование отдела"
-                                            DisplayMemberBinding="{Binding Path=Name}"/> <!--укажем путь до свойства, иначе покажет весь обьект-->
+                                            DisplayMemberBinding="{Binding Path=Name}"/>                             
+                            <!--укажем путь до свойства, иначе покажет весь обьект-->
                             <!--с помощью свойства Header определяет название столбца, а с помощью свойства DisplayMemberBinding можно определить 
                             привязку столбца к определенному свойству добавляемого в ListView объекта.-->
                             <GridViewColumn Header="Количество перссонала"
-                                            DisplayMemberBinding="{Binding Path=Positions.MaxNumber}"/> <!--так работать не будет Binding Path=Positions.Count}-->
+                                            DisplayMemberBinding="{Binding Path=DepartmentPosition.Count}"/> <!--так работать не будет Binding Path=Positions.Count}-->
                         </GridView>
                     </ListView.View>
                 </ListView>
