@@ -31,9 +31,9 @@
                             <GridViewColumn Header="Должность"
                                             DisplayMemberBinding="{Binding Path=PersonPosition.Name}"/>
                             <GridViewColumn Header="Зарплата"
-                                            DisplayMemberBinding="{Binding Path=Position.Salary}"/>
+                                            DisplayMemberBinding="{Binding Path=PersonPosition.Salary}"/>
                             <GridViewColumn Header="Отдел"
-                                            DisplayMemberBinding="{Binding Path=Department.Name}"/>
+                                            DisplayMemberBinding="{Binding Path=PersonPosition.PositionDepartment.Name}"/>
                             <GridViewColumn Header="Спец.работы"
                                             DisplayMemberBinding="{Binding Path=SpecialWorks}"/>
                             <GridViewColumn Header="Дата рождения"
@@ -59,7 +59,7 @@
                             <GridViewColumn Header="Отдел"
                                             DisplayMemberBinding="{Binding Path=PositionDepartment.Name}"/>
                             <GridViewColumn Header="Количество персонала"
-                                            DisplayMemberBinding="{Binding Path=Person.Count}"/>
+                                            DisplayMemberBinding="{Binding Path=PositionPersons.Count}"/>
                             <GridViewColumn Header="Максимально возможное количество персонала"
                                             DisplayMemberBinding="{Binding Path=MaxNumber}"/>
                         </GridView>
@@ -93,7 +93,8 @@
                 <ListView x:Name="ViewAllSpWorks" ItemsSource="{Binding AllSpWorks}">
                     <ListView.View>
                         <GridView>
-                            <GridViewColumn Header="Наименование спец.работы"/>
+                            <GridViewColumn Header="Наименование спец.работы"
+                                            DisplayMemberBinding="{Binding Path=Name}"/>
                         </GridView>
                     </ListView.View>
                 </ListView>

@@ -276,10 +276,13 @@ namespace StaffManager.Model
 
         }
 
-        // возраст
+        // расчет возраста
         public static int AgeCount(DateTime Birthday)
         {
             int age = DateTime.Now.Year - Birthday.Year;
+            if (Birthday < DateTime.Now.AddYears(-age)) age--;
+            //age = (Birthday < DateTime.Now.AddYears(-age)) ? age : age--;
+
 
 
             return age;

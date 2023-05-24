@@ -26,6 +26,8 @@ namespace StaffManager.Model
 
         public ICollection<SpecialWork> SpecialWorks { get; set; }
 
+
+        // свойства не для БД, а для внутреннего пользования
         [NotMapped]
         public Position PersonPosition 
         {
@@ -36,14 +38,17 @@ namespace StaffManager.Model
 
         }
 
-        // расчет возраста
-        public static int Age(DateTime Birthday)
+        [NotMapped]
+        public int Age
         {
-            int age = DateTime.Now.Year - Birthday.Year;
+            get
+            {
+                return StaffUnits.AgeCount((DateTime)Birthday);
 
+            }
 
-            return age;
         }
+
 
     }
 }
