@@ -281,11 +281,7 @@ namespace StaffManager.Model
         {
             int age = DateTime.Now.Year - Birthday.Year;
             if (Birthday < DateTime.Now.AddYears(-age)) age--;
-            //age = (Birthday < DateTime.Now.AddYears(-age)) ? age : age--;
-
-
-
-            return age;
+             return age;
         }
 
         // получить позицию по id 

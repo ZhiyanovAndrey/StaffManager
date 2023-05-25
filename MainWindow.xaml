@@ -12,12 +12,19 @@
             <RowDefinition Height="50"/>
         </Grid.RowDefinitions>
 
-        <TabControl Grid.Row="0">
-            <TabItem x:Name="UserTab">
+        <TabControl Grid.Row="0" SelectedItem="{Binding SelectedTabItem}">
+            <TabItem x:Name="PersonTab">
                 <TabItem.Header>
                     <TextBlock Text="Персонал"/>
                 </TabItem.Header>
-                <ListView x:Name="ViewAllPersons" ItemsSource="{Binding AllPersons}">
+                <TabItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Редактировать"/>
+                        <MenuItem Header="Удалить" Command="{Binding DelItem}"/>
+                    </ContextMenu>
+                </TabItem.ContextMenu>
+                <ListView x:Name="ViewAllPersons" ItemsSource="{Binding AllPersons}"
+                          SelectedItem="{Binding SelectedPerson}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Фамилия"
@@ -49,7 +56,14 @@
                 <TabItem.Header>
                     <TextBlock Text="Должность"/>
                 </TabItem.Header>
-                <ListView x:Name="ViewAllPositions" ItemsSource="{Binding AllPositions}">
+                <TabItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Редактировать"/>
+                        <MenuItem Header="Удалить" Command="{Binding DelItem}"/>
+                    </ContextMenu>
+                </TabItem.ContextMenu>
+                <ListView x:Name="ViewAllPositions" ItemsSource="{Binding AllPositions}"
+                          SelectedItem="{Binding SelectedPosition}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Наименование должности" 
@@ -67,11 +81,18 @@
                 </ListView>
             </TabItem>
 
-            <TabItem x:Name="DepartTab">
+            <TabItem x:Name="DepartmentTab">
                 <TabItem.Header>
                     <TextBlock Text="Отдел"/>
                 </TabItem.Header>
-                <ListView x:Name="ViewAllDepartmens" ItemsSource="{Binding AllDepartments}">
+                <TabItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Редактировать"/>
+                        <MenuItem Header="Удалить" Command="{Binding DelItem}"/>
+                    </ContextMenu>
+                </TabItem.ContextMenu>
+                <ListView x:Name="ViewAllDepartmens" ItemsSource="{Binding AllDepartments}"
+                          SelectedItem="{Binding SelectedDepartment}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Наименование отдела"
@@ -90,7 +111,14 @@
                 <TabItem.Header>
                     <TextBlock Text="Спец.работы"/>
                 </TabItem.Header>
-                <ListView x:Name="ViewAllSpWorks" ItemsSource="{Binding AllSpWorks}">
+                <TabItem.ContextMenu>
+                    <ContextMenu>
+                        <MenuItem Header="Редактировать"/>
+                        <MenuItem Header="Удалить" Command="{Binding DelItem}"/>
+                    </ContextMenu>
+                </TabItem.ContextMenu>
+                <ListView x:Name="ViewAllSpWorks" ItemsSource="{Binding AllSpWorks}"
+                          SelectedItem="{Binding SelectedSpWork}">
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="Наименование спец.работы"

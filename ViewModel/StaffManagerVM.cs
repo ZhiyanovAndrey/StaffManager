@@ -41,6 +41,14 @@ namespace StaffManager.ViewModel
         public Position PersonPosition { get; set; }
         public SpecialWork PersonSpWork { get; set; }
 
+        // свойства для сохранения выделенной строки
+        public TabItem SelectedTabItem { get; set; }
+        public Person SelectedPerson { get; set; }
+        public Position SelectedPosition { get; set; }
+        public Department SelectedDepartment { get; set; }
+        public SpecialWork SelectedSpWork { get; set; }
+
+
         // метод обнуляет все свойства
         private void SetNullValuesToPropeties()
         {
@@ -104,7 +112,7 @@ namespace StaffManager.ViewModel
 
                     else
                     {
-                        resultstring = StaffUnits.CreatePerson(PersonSurName, PersonName, PersonFirdName, PersonPhone, 
+                        resultstring = StaffUnits.CreatePerson(PersonSurName, PersonName, PersonFirdName, PersonPhone,
                                                     PersonBirthday, PersonPosition);
                         // а св-вa в текущем классе связываем с пом. DataContext = new StaffManagerVM();
                         ShowMessage(resultstring);
@@ -191,7 +199,7 @@ namespace StaffManager.ViewModel
                     else
                     {
                         resultstring = StaffUnits.CreatePosition(PositionName, PositionSalary, PositionDepartment, PositionMaxNumber);
-                                               // а св-вa в текущем классе связываем с пом. DataContext = new StaffManagerVM();
+                        // а св-вa в текущем классе связываем с пом. DataContext = new StaffManagerVM();
                         ShowMessage(resultstring);
                         UpdateAll();
                         SetNullValuesToPropeties(); // обнулим все поля
@@ -203,6 +211,47 @@ namespace StaffManager.ViewModel
         }
         #endregion
 
+        #region COMMANDS TO DELITE
+
+
+        private RelayCommand delItem;
+        public RelayCommand DelItem
+        {
+            get
+            {
+                return delItem ?? new RelayCommand(obj =>
+                {
+                    string resultstring = "Ничего не выбрано";
+                    if (SelectedTabItem.Name == "PersonTab" && SelectedPerson != null)
+                    {
+                        resultstring = StaffUnits.DeletePerson(SelectedPerson); // принимает Person из свойства, св-во связано с SelrctedItem
+                        UpdateAll();
+                    }
+                    if (SelectedTabItem.Name == "PositionTab" && SelectedPosition != null)
+                    {
+                        resultstring = StaffUnits.DeletePosition(SelectedPosition); 
+                        UpdateAll();
+                    }
+                    if (SelectedTabItem.Name == "DepartmentTab" && SelectedDepartment != null)
+                    {
+                        resultstring = StaffUnits.DeleteDepartment(SelectedDepartment); 
+                        UpdateAll();
+                    }
+                    if (SelectedTabItem.Name == "SpWorkTab" && SelectedSpWork != null)
+                    {
+                        resultstring = StaffUnits.DeleteSpWork(SelectedSpWork); 
+                        UpdateAll();
+                    }
+
+
+                    // если не одно из условий не попадает то сообщение
+                    ShowMessage(resultstring);
+                    SetNullValuesToPropeties();
+                });
+            }
+        }
+
+        #endregion
 
         #region SHOW STAFF IN WINDOW
         // все отделы
@@ -373,7 +422,7 @@ namespace StaffManager.ViewModel
             }
         }
 
-  
+
 
         #endregion
 
