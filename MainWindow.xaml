@@ -19,7 +19,7 @@
                 </TabItem.Header>
                 <TabItem.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="Редактировать"/>
+                        <MenuItem Header="Редактировать" Command="{Binding OpenEditItemWin}"/>
                         <MenuItem Header="Удалить" Command="{Binding DelItem}"/>
                     </ContextMenu>
                 </TabItem.ContextMenu>
@@ -41,10 +41,10 @@
                                             DisplayMemberBinding="{Binding Path=PersonPosition.Salary}"/>
                             <GridViewColumn Header="Отдел"
                                             DisplayMemberBinding="{Binding Path=PersonPosition.PositionDepartment.Name}"/>
-                            <GridViewColumn Header="Спец.работы"
-                                            DisplayMemberBinding="{Binding Path=SpecialWorks}"/>
+                            <!--<GridViewColumn Header="Спец.работы"
+                                            DisplayMemberBinding="{Binding Path=SpecialWorks}"/>-->
                             <GridViewColumn Header="Дата рождения"
-                                            DisplayMemberBinding="{Binding Path=Birthday}"/>
+                                            DisplayMemberBinding="{Binding Path=Birthday, StringFormat=dd.MM.yyyy}"/>
                             <GridViewColumn Header="Возраст"
                                             DisplayMemberBinding="{Binding Path=Age}"/>
                         </GridView>
@@ -132,7 +132,7 @@
         
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" >
             <Button Content="Новый сотрудник" Command="{Binding OpenAddNewPersonWin}"/>
-            <Button Content="Новая позиция" Command="{Binding OpenAddNewPositionWin}"/>
+            <Button Content="Новая должность" Command="{Binding OpenAddNewPositionWin}"/>
             <Button Content="Новый отдел" Command="{Binding OpenAddNewDepartmentWin}"/>
             <Button Content="Новая спец.работа" Command="{Binding OpenAddNewSpecialWorkWin}"/>
         </StackPanel>

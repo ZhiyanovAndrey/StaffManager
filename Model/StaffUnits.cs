@@ -280,7 +280,7 @@ namespace StaffManager.Model
         public static int AgeCount(DateTime Birthday)
         {
             int age = DateTime.Now.Year - Birthday.Year;
-            if (Birthday < DateTime.Now.AddYears(-age)) age--;
+            if (Birthday > DateTime.Now.AddYears(-age)) age--;
              return age;
         }
 

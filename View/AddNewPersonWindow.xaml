@@ -27,8 +27,6 @@
             <TextBox x:Name="PhoneTB" PreviewTextInput="PreviewTextInput" Text="{Binding PersonPhone}"/>
             <TextBlock Text="Дата рождения"/>
             <TextBox x:Name="BirthdayTB" Text="{Binding PersonBirthday}"/>
-            <TextBlock Text="Возраст"/>
-            <TextBlock x:Name="AgeTB"/>
             <TextBlock Text="Должность"/>
             <ComboBox ItemsSource="{Binding AllPositions}"
                       SelectedItem="{Binding PersonPosition}"

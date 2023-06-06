@@ -91,8 +91,8 @@ namespace StaffManager.ViewModel
                     /* 
                      * не забыть в AddNewPersonWindow сделать  Command="{Binding AddNewPerson}" для привязки к команде
                      * сделать Binding PersonName и наименование соответствующего ТВ x:Name="NameTB" и всех остальных полей
-                     * <ComboBox ItemsSource="{Binding AllPositions}"
-                     * и CommandParameter="{Binding ElementName=AddNewPositionWin}" для привязки всего окна дать имя окну
+                     * <ComboBox ItemsSource="{Binding AllPositions}" в AddNewPersonWindow
+                     * и CommandParameter="{Binding ElementName=AddNewPositionWin}" для привязки всего окна к команде дать имя окну AddNewPositionWin
                      * прописать в Combobox  ItemsSource="{Binding AllPositions}" и DisplayMemberPath="Name" для отображения всех только имени, а не класса
                      * SelectedItem="{Binding PersonPosition}" для помещения выбранной позиции в одноименное свойство.
                      * прописать в ListView.View ко всем полям соответственно DisplayMemberBinding="{Binding Path=Name}
@@ -222,24 +222,27 @@ namespace StaffManager.ViewModel
                 return delItem ?? new RelayCommand(obj =>
                 {
                     string resultstring = "Ничего не выбрано";
+
+                    // первая часть if отделяет определенный Tab что бы выполнить определенное действие
+                    // вторая часть если ПКМ в пустом месте выведет исключение т.к. переменная метода Remove(person) не может быть null
                     if (SelectedTabItem.Name == "PersonTab" && SelectedPerson != null)
                     {
-                        resultstring = StaffUnits.DeletePerson(SelectedPerson); // принимает Person из свойства, св-во связано с SelrctedItem
+                        resultstring = StaffUnits.DeletePerson(SelectedPerson); // принимает Person из свойства, св-во связано с SelectedItem
                         UpdateAll();
                     }
                     if (SelectedTabItem.Name == "PositionTab" && SelectedPosition != null)
                     {
-                        resultstring = StaffUnits.DeletePosition(SelectedPosition); 
+                        resultstring = StaffUnits.DeletePosition(SelectedPosition);
                         UpdateAll();
                     }
                     if (SelectedTabItem.Name == "DepartmentTab" && SelectedDepartment != null)
                     {
-                        resultstring = StaffUnits.DeleteDepartment(SelectedDepartment); 
+                        resultstring = StaffUnits.DeleteDepartment(SelectedDepartment);
                         UpdateAll();
                     }
                     if (SelectedTabItem.Name == "SpWorkTab" && SelectedSpWork != null)
                     {
-                        resultstring = StaffUnits.DeleteSpWork(SelectedSpWork); 
+                        resultstring = StaffUnits.DeleteSpWork(SelectedSpWork);
                         UpdateAll();
                     }
 
@@ -252,6 +255,159 @@ namespace StaffManager.ViewModel
         }
 
         #endregion
+
+        #region COMMANDS TO EDIT
+        private RelayCommand editPerson;
+        public RelayCommand EditPerson
+        {
+            get
+            {
+                return editPerson ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultstr = "Не выбран сотрудник";
+                    string noPosition = "Не выбрана новая должность";
+
+                    if (PersonPosition != null)
+                    {
+                        if (SelectedPerson != null)
+                        {
+                            resultstr = StaffUnits.EditPerson(SelectedPerson, PersonSurName, PersonName, PersonFirdName, PersonPhone, PersonBirthday, PersonPosition);
+                            UpdateAll();
+                            SetNullValuesToPropeties();
+                            ShowMessage(resultstr);
+                            window.Close();
+                        }
+                        else ShowMessage(noPosition);
+                    }
+                    else ShowMessage(resultstr);
+                });
+            }
+        }
+
+
+        private RelayCommand editPosition;
+        public RelayCommand EditPosition
+        {
+            get
+            {
+                return editPerson ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultstr = "Не выбрана должность";
+                    string noDepartment = "Не выбрана новый отдел";
+
+                    if (PositionDepartment != null)
+                    {
+                        if (SelectedPosition != null)
+                        {
+                            resultstr = StaffUnits.EditPosition(SelectedPerson, PersonSurName, PersonName, PersonFirdName, PersonPhone, PersonBirthday, PersonPosition);
+                            UpdateAll();
+                            SetNullValuesToPropeties();
+                            ShowMessage(resultstr);
+                            window.Close();
+                        }
+                        else ShowMessage(noDepartment);
+                    }
+                    else ShowMessage(resultstr);
+                });
+            }
+        }
+
+        #endregion
+
+
+
+        #region COMMANDS TO OPEN WINDOWS
+
+        private RelayCommand openEditItemWin;
+        public RelayCommand OpenEditItemWin
+        {
+            get
+            {
+                return openEditItemWin ?? new RelayCommand(obj =>
+                {
+                    string resultstring = "Ничего не выбрано";
+
+                    if (SelectedTabItem.Name == "PersonTab" && SelectedPerson != null)
+                    {
+                        OpenEditPersonWindowMethod();
+                    }
+                    if (SelectedTabItem.Name == "PositionTab" && SelectedPosition != null)
+                    {
+                        OpenEditPositionWindowMethod();
+                    }
+                    if (SelectedTabItem.Name == "DepartmentTab" && SelectedDepartment != null)
+                    {
+                        OpenEditDepartmentWindowMethod();
+                    }
+                    if (SelectedTabItem.Name == "SpWorkTab" && SelectedSpWork != null)
+                    {
+
+                        OpenEditSpecialWorkWindowMethod();
+                    }
+                });
+            }
+        }
+
+
+
+        private RelayCommand openAddNewDepartmentWin;
+        public RelayCommand OpenAddNewDepartmentWin // в VM делаем Binding к публичным командам
+        {
+            get
+            {
+                return openAddNewDepartmentWin ?? new RelayCommand(obj => // проверка непустой ли он если да то RelayComand
+                {
+                    OpenAppDepartmentWindowMethod();
+                }
+                );
+            }
+        }
+
+        private RelayCommand openAddNewPositionWin;
+        public RelayCommand OpenAddNewPositionWin
+        {
+            get
+            {
+                return openAddNewPositionWin ?? new RelayCommand(obj =>
+                {
+                    OpenAppPositionWindowMethod();
+                }
+                );
+            }
+        }
+
+        private RelayCommand openAddNewPersonWin;
+        public RelayCommand OpenAddNewPersonWin
+        {
+            get
+            {
+                return openAddNewPersonWin ?? new RelayCommand(obj =>
+                {
+                    OpenAppPersonWindowMethod();
+                }
+                );
+            }
+        }
+
+        private RelayCommand openAddNewSpecialWorkWin;
+        public RelayCommand OpenAddNewSpecialWorkWin // в VM делаем Binding к публичным командам
+        {
+            get
+            {
+                return openAddNewSpecialWorkWin ?? new RelayCommand(obj =>
+                {
+                    OpenAppSpecialWorkWindowMethod();
+                }
+                );
+            }
+        }
+
+
+
+        #endregion
+
 
         #region SHOW STAFF IN WINDOW
         // все отделы
@@ -367,64 +523,7 @@ namespace StaffManager.ViewModel
         }
         #endregion
 
-        #region COMMANDS TO OPEN WINDOWS
 
-
-        private RelayCommand openAddNewDepartmentWin;
-        public RelayCommand OpenAddNewDepartmentWin // в VM делаем Binding к публичным командам
-        {
-            get
-            {
-                return openAddNewDepartmentWin ?? new RelayCommand(obj => // проверка непустой ли он если да то RelayComand
-                {
-                    OpenAppDepartmentWindowMethod();
-                }
-                );
-            }
-        }
-
-        private RelayCommand openAddNewPositionWin;
-        public RelayCommand OpenAddNewPositionWin
-        {
-            get
-            {
-                return openAddNewPositionWin ?? new RelayCommand(obj =>
-                {
-                    OpenAppPositionWindowMethod();
-                }
-                );
-            }
-        }
-
-        private RelayCommand openAddNewPersonWin;
-        public RelayCommand OpenAddNewPersonWin
-        {
-            get
-            {
-                return openAddNewPersonWin ?? new RelayCommand(obj =>
-                {
-                    OpenAppPersonWindowMethod();
-                }
-                );
-            }
-        }
-
-        private RelayCommand openAddNewSpecialWorkWin;
-        public RelayCommand OpenAddNewSpecialWorkWin // в VM делаем Binding к публичным командам
-        {
-            get
-            {
-                return openAddNewSpecialWorkWin ?? new RelayCommand(obj =>
-                {
-                    OpenAppSpecialWorkWindowMethod();
-                }
-                );
-            }
-        }
-
-
-
-        #endregion
 
 
 
