@@ -24,29 +24,29 @@ namespace StaffManager.ViewModel
             }
         }
         // свойства для работы с командами
-        public string DepartmentName { get; set; }
+        public static string DepartmentName { get; set; }
 
-        public string SpWorkName { get; set; }
+        public static string SpWorkName { get; set; }
 
-        public string PositionName { get; set; }
-        public decimal PositionSalary { get; set; }
-        public int PositionMaxNumber { get; set; }
-        public Department PositionDepartment { get; set; }
+        public static string PositionName { get; set; }
+        public static decimal PositionSalary { get; set; }
+        public static int PositionMaxNumber { get; set; }
+        public static Department PositionDepartment { get; set; }
 
-        public string PersonSurName { get; set; }
-        public string PersonName { get; set; }
-        public string PersonFirdName { get; set; }
-        public string PersonPhone { get; set; }
-        public DateTime PersonBirthday { get; set; }
-        public Position PersonPosition { get; set; }
-        public SpecialWork PersonSpWork { get; set; }
+        public static string PersonSurName { get; set; }
+        public static string PersonName { get; set; }
+        public static string PersonFirdName { get; set; }
+        public static string PersonPhone { get; set; }
+        public static DateTime PersonBirthday { get; set; }
+        public static Position PersonPosition { get; set; }
+        public static SpecialWork PersonSpWork { get; set; }
 
         // свойства для сохранения выделенной строки
         public TabItem SelectedTabItem { get; set; }
-        public Person SelectedPerson { get; set; }
-        public Position SelectedPosition { get; set; }
-        public Department SelectedDepartment { get; set; }
-        public SpecialWork SelectedSpWork { get; set; }
+        public static Person SelectedPerson { get; set; }
+        public static Position SelectedPosition { get; set; }
+        public static Department SelectedDepartment { get; set; }
+        public static SpecialWork SelectedSpWork { get; set; }
 
 
         // метод обнуляет все свойства
@@ -291,7 +291,7 @@ namespace StaffManager.ViewModel
         {
             get
             {
-                return editPerson ?? new RelayCommand(obj =>
+                return editPosition ?? new RelayCommand(obj =>
                 {
                     Window window = obj as Window;
                     string resultstr = "Не выбрана должность";
@@ -301,13 +301,38 @@ namespace StaffManager.ViewModel
                     {
                         if (SelectedPosition != null)
                         {
-                            resultstr = StaffUnits.EditPosition(SelectedPerson, PersonSurName, PersonName, PersonFirdName, PersonPhone, PersonBirthday, PersonPosition);
+                            resultstr = StaffUnits.EditPosition(SelectedPosition, PositionName, PositionMaxNumber, PositionSalary,  PositionDepartment);
                             UpdateAll();
                             SetNullValuesToPropeties();
                             ShowMessage(resultstr);
                             window.Close();
                         }
                         else ShowMessage(noDepartment);
+                    }
+                    else ShowMessage(resultstr);
+                });
+            }
+        }
+
+        private RelayCommand editDepartment;
+        public RelayCommand EditDepartment
+        {
+            get
+            {
+                return editDepartment ?? new RelayCommand(obj =>
+                {
+                    Window window = obj as Window;
+                    string resultstr = "Не выбрана должность";
+
+
+                        if (SelectedDepartment != null)
+                        {
+                            resultstr = StaffUnits.EditDepartment(SelectedDepartment, DepartmentName);
+                            UpdateAll();
+                            SetNullValuesToPropeties();
+                            ShowMessage(resultstr);
+                            window.Close();
+
                     }
                     else ShowMessage(resultstr);
                 });

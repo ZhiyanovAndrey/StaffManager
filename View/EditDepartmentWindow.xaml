@@ -5,7 +5,8 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StaffManager.View"
         mc:Ignorable="d"
-        Title="Изменение отдела" Height="300" Width="300">
+        Title="Изменение отдела" Height="300" Width="300"
+        x:Name="EditDepartmentWin">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -17,10 +18,12 @@
                     HorizontalAlignment="Center" VerticalAlignment="Center" Width="200">
 
             <TextBlock Text="Новое название отдела"/>
-            <TextBox Text="" Padding="5"/>
+            <TextBox Text="{Binding DepartmentName}" Padding="5"/>
 
         </StackPanel>
 
-        <Button Grid.Row= "1" Content="Изменить отдел"/>
+        <Button Grid.Row= "1" Content="Изменить отдел"
+                  Command="{Binding DepartmentEdit}"
+                CommandParameter="{Binding ElementName=EditDepartmentWin}"/>
     </Grid>
 </Window>

@@ -24,12 +24,13 @@
             <TextBlock Text="Редактировать Отчество"/>
             <TextBox Text="{Binding PersonFirdName}"/>
             <TextBlock Text="Редактировать Телефон"/>
-            <TextBox Text="{Binding Phone}"/>
+            <TextBox Text="{Binding PersonPhone}"/>
             <TextBlock Text="Редактировать день рождения"/>
             <TextBox Text="{Binding PersonBirthday}"/>
             <TextBlock Text="Редактировать должность"/>
-            <ComboBox ItemsSource="{Binding AllPersons}"
+            <ComboBox ItemsSource="{Binding AllPositions}"
                       SelectedItem="{Binding PersonPosition}"
+                      DisplayMemberPath="Name"
                       />
         </StackPanel>
 

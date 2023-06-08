@@ -207,7 +207,7 @@ namespace StaffManager.Model
 
 
         // редактировать позицию
-        public static string EditPosition(Department oldPosition, string newName, int newMaxNum, decimal newSalary, Department newDepartment)
+        public static string EditPosition(Position oldPosition, string newName, int newMaxNum, decimal newSalary, Department newDepartment)
         {
             string result = "Такой позиции не существует";
             using (Context context = new Context())
