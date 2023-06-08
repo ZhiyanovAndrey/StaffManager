@@ -1,4 +1,5 @@
-﻿using StaffManager.ViewModel;
+﻿using StaffManager.Model;
+using StaffManager.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,10 +21,16 @@ namespace StaffManager.View
     /// </summary>
     public partial class EditPersonWindow : Window
     {
-        public EditPersonWindow()
+        public EditPersonWindow(Person personToEdit) 
         {
             InitializeComponent();
-            DataContext = new StaffManagerVM();
+            DataContext = new StaffManagerVM(); // сначала обьявили новый VM
+            StaffManagerVM.SelectedPerson = personToEdit;  // получаем инфо из VM и сохраняем обратно в StaffManagerVM
+            StaffManagerVM.PersonSurName=personToEdit.SurName;    
+            StaffManagerVM.PersonName=personToEdit.Name;    
+            StaffManagerVM.PersonFirdName=personToEdit.FirdName;    
+            StaffManagerVM.PersonPhone=personToEdit.Phone;
+            //StaffManagerVM.PersonBirthday = personToEdit.Birthday;
         }
     }
 }

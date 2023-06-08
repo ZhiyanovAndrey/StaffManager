@@ -23,7 +23,7 @@
         </StackPanel>
 
         <Button Grid.Row= "1" Content="Изменить отдел"
-                  Command="{Binding DepartmentEdit}"
+                  Command="{Binding EditDepartment}"
                 CommandParameter="{Binding ElementName=EditDepartmentWin}"/>
     </Grid>
 </Window>

@@ -258,7 +258,7 @@ namespace StaffManager.ViewModel
 
         #region COMMANDS TO EDIT
         private RelayCommand editPerson;
-        public RelayCommand EditPerson
+        public RelayCommand EditPerson 
         {
             get
             {
@@ -268,9 +268,9 @@ namespace StaffManager.ViewModel
                     string resultstr = "Не выбран сотрудник";
                     string noPosition = "Не выбрана новая должность";
 
-                    if (PersonPosition != null)
+                    if (SelectedPerson != null)
                     {
-                        if (SelectedPerson != null)
+                        if (PersonPosition != null)
                         {
                             resultstr = StaffUnits.EditPerson(SelectedPerson, PersonSurName, PersonName, PersonFirdName, PersonPhone, PersonBirthday, PersonPosition);
                             UpdateAll();
@@ -297,9 +297,9 @@ namespace StaffManager.ViewModel
                     string resultstr = "Не выбрана должность";
                     string noDepartment = "Не выбрана новый отдел";
 
-                    if (PositionDepartment != null)
+                    if (SelectedPosition != null)
                     {
-                        if (SelectedPosition != null)
+                        if (PositionDepartment != null)
                         {
                             resultstr = StaffUnits.EditPosition(SelectedPosition, PositionName, PositionMaxNumber, PositionSalary,  PositionDepartment);
                             UpdateAll();
@@ -356,15 +356,15 @@ namespace StaffManager.ViewModel
 
                     if (SelectedTabItem.Name == "PersonTab" && SelectedPerson != null)
                     {
-                        OpenEditPersonWindowMethod();
+                        OpenEditPersonWindowMethod(SelectedPerson);
                     }
                     if (SelectedTabItem.Name == "PositionTab" && SelectedPosition != null)
                     {
-                        OpenEditPositionWindowMethod();
+                        OpenEditPositionWindowMethod(SelectedPosition);
                     }
                     if (SelectedTabItem.Name == "DepartmentTab" && SelectedDepartment != null)
                     {
-                        OpenEditDepartmentWindowMethod();
+                        OpenEditDepartmentWindowMethod(SelectedDepartment);
                     }
                     if (SelectedTabItem.Name == "SpWorkTab" && SelectedSpWork != null)
                     {
@@ -516,21 +516,21 @@ namespace StaffManager.ViewModel
 
 
 
-        private void OpenEditDepartmentWindowMethod()
+        private void OpenEditDepartmentWindowMethod(Department department)
         {
-            EditDepartmentWindow newDepartmentWindow = new EditDepartmentWindow();
+            EditDepartmentWindow newDepartmentWindow = new EditDepartmentWindow(department);
             SelectCenterPositionAndOpen(newDepartmentWindow);
         }
 
-        private void OpenEditPositionWindowMethod()
+        private void OpenEditPositionWindowMethod(Position position)
         {
-            EditPositionWindow newPositionWindow = new EditPositionWindow();
+            EditPositionWindow newPositionWindow = new EditPositionWindow(position);
             SelectCenterPositionAndOpen(newPositionWindow);
         }
 
-        private void OpenEditPersonWindowMethod()
+        private void OpenEditPersonWindowMethod(Person person) // передаем инфо из БД в окно правки
         {
-            EditPersonWindow newPersonWindow = new EditPersonWindow();
+            EditPersonWindow newPersonWindow = new EditPersonWindow(person);
             SelectCenterPositionAndOpen(newPersonWindow);
         }
 

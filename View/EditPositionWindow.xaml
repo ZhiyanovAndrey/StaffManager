@@ -31,7 +31,7 @@
         </StackPanel>
 
         <Button Grid.Row= "1" Content="Изменить должность"
-                  Command="{Binding PositionEdit}"
+                  Command="{Binding EditPosition}"
                 CommandParameter="{Binding ElementName=EditPositionWin}"
                 />
     </Grid>
