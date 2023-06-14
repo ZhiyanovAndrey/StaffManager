@@ -549,9 +549,6 @@ namespace StaffManager.ViewModel
         #endregion
 
 
-
-
-
         #region UPDATE WINDOW METHODS
 
         // наполняем статичные свойства в гл.окне

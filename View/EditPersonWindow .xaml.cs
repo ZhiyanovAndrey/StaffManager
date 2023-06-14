@@ -30,7 +30,7 @@ namespace StaffManager.View
             StaffManagerVM.PersonName=personToEdit.Name;    
             StaffManagerVM.PersonFirdName=personToEdit.FirdName;    
             StaffManagerVM.PersonPhone=personToEdit.Phone;
-            //StaffManagerVM.PersonBirthday = personToEdit.Birthday;
+            StaffManagerVM.PersonBirthday = (DateTime)personToEdit.Birthday;
         }
     }
 }

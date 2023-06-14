@@ -31,9 +31,9 @@
             <ComboBox ItemsSource="{Binding AllPositions}"
                       SelectedItem="{Binding PersonPosition}"
                       DisplayMemberPath="Name"/>
-            <!--<TextBlock Text="Спец.работы"/>-->
-            <!--<ComboBox ItemsSource="{Binding AllSpWorks}"
-                      DisplayMemberPath="Name"/>-->
+            <TextBlock Text="Спец.работы"/>
+            <ComboBox ItemsSource="{Binding AllSpWorks}"
+                      DisplayMemberPath="Name"/>
             
         </StackPanel>
 
