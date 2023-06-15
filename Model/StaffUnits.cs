@@ -1,4 +1,5 @@
-﻿using StaffManager.Model;
+﻿using Microsoft.VisualBasic;
+using StaffManager.Model;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -86,18 +87,21 @@ namespace StaffManager.Model
         }
 
         // создать сотрудника
-        public static string CreatePerson(string surname, string name, string firdname, string phone, DateTime birthday, Position position)
+        public static string CreatePerson(string surname, string name, string firdname, string phone, DateTime birthday, Position position, List<SpecialWork> specialWork) //SpecialWork specialWork
         {
             string result = "Уже существует";
             using (Context context = new Context())
             {
-                bool CheckIsExist = context.Persons.Any(p => p.SurName == surname && p.Name == name && p.FirdName == firdname); // существует ли сотрудник ???добавить ФИО позицию
+                bool CheckIsExist = context.Persons.Any(p => p.SurName == surname && p.Name == name && p.FirdName == firdname); // существует ли сотрудник
                 if (!CheckIsExist)
                 {
                     Person newPerson = new Person
                     {
                         Name = name, SurName=surname, FirdName=firdname, Phone=phone,
-                        Birthday=birthday, PositionId=position.Id
+                        Birthday=birthday, PositionId=position.Id, SpecialWorks=specialWork
+                        
+                        /*, SpecialWorks.Id = specialWork.Id
+                                                                   * SpecialWorks = new List<SpecialWork>() { strop, cutter, vv, buran }*/
                     };
                     context.Persons.Add(newPerson);
                     context.SaveChanges();
@@ -251,7 +255,7 @@ namespace StaffManager.Model
                     person.PositionId = newPosition.Id;
 
                     context.SaveChanges();
-                    result = $"Информация о сотруднике {person.Name} изменена";
+                    result = $"Информация о сотруднике {person.SurName} изменена";
                 }
 
             }

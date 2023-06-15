@@ -26,7 +26,7 @@
             <TextBlock Text="Редактировать Телефон"/>
             <TextBox Text="{Binding PersonPhone}"/>
             <TextBlock Text="Редактировать день рождения"/>
-            <TextBox Text="{Binding Path=Birthday, StringFormat=dd.MM.yyyy}"/>
+            <TextBox Text="{Binding Path=PersonBirthday,  StringFormat=dd.MM.yyyy, ConverterCulture=RU-ru}"/>
             <TextBlock Text="Редактировать должность"/>
             <ComboBox ItemsSource="{Binding AllPositions}"
                       SelectedItem="{Binding PersonPosition}"

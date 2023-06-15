@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:StaffManager.View"
         mc:Ignorable="d"
-        Title="AddNewPersonWindow" Height="400" Width="300"
+        Title="AddNewPersonWindow" Height="600" Width="300"
         x:Name="AddNewPersonWin">
     <Grid>
         <Grid.RowDefinitions>
@@ -26,14 +26,16 @@
             <TextBlock Text="Телефон"/>
             <TextBox x:Name="PhoneTB" PreviewTextInput="PreviewTextInput" Text="{Binding PersonPhone}"/>
             <TextBlock Text="Дата рождения"/>
-            <TextBox x:Name="BirthdayTB" Text="{Binding PersonBirthday}"/>
+            <TextBox x:Name="BirthdayTB" Text="{Binding PersonBirthday, StringFormat=d, ConverterCulture=RU-ru}"/>
             <TextBlock Text="Должность"/>
             <ComboBox ItemsSource="{Binding AllPositions}"
                       SelectedItem="{Binding PersonPosition}"
                       DisplayMemberPath="Name"/>
             <TextBlock Text="Спец.работы"/>
-            <ComboBox ItemsSource="{Binding AllSpWorks}"
-                      DisplayMemberPath="Name"/>
+            <ListBox  ItemsSource="{Binding AllSpWorks}"
+                      DisplayMemberPath="Name"
+                      SelectedItem="{Binding PersonSpwork}"
+                      SelectionMode="Multiple"/>
             
         </StackPanel>
 

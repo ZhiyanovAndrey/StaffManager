@@ -39,7 +39,7 @@ namespace StaffManager.ViewModel
         public static string PersonPhone { get; set; }
         public static DateTime PersonBirthday { get; set; }
         public static Position PersonPosition { get; set; }
-        public static SpecialWork PersonSpWork { get; set; }
+        public static List<SpecialWork> PersonSpWork { get; set; }
 
         // свойства для сохранения выделенной строки
         public TabItem SelectedTabItem { get; set; }
@@ -113,8 +113,8 @@ namespace StaffManager.ViewModel
                     else
                     {
                         resultstring = StaffUnits.CreatePerson(PersonSurName, PersonName, PersonFirdName, PersonPhone,
-                                                    PersonBirthday, PersonPosition);
-                        // а св-вa в текущем классе связываем с пом. DataContext = new StaffManagerVM();
+                                                    PersonBirthday, PersonPosition, PersonSpWork);  // Binding к AddNewPersonWindow
+
                         ShowMessage(resultstring);
                         UpdateAll();
                         SetNullValuesToPropeties(); // обнулим все поля
@@ -199,7 +199,7 @@ namespace StaffManager.ViewModel
                     else
                     {
                         resultstring = StaffUnits.CreatePosition(PositionName, PositionSalary, PositionDepartment, PositionMaxNumber);
-                        // а св-вa в текущем классе связываем с пом. DataContext = new StaffManagerVM();
+                        // Binding к AddNewPositionWindow
                         ShowMessage(resultstring);
                         UpdateAll();
                         SetNullValuesToPropeties(); // обнулим все поля
@@ -340,7 +340,6 @@ namespace StaffManager.ViewModel
         }
 
         #endregion
-
 
 
         #region COMMANDS TO OPEN WINDOWS

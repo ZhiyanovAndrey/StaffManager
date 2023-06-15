@@ -41,10 +41,10 @@
                                             DisplayMemberBinding="{Binding Path=PersonPosition.Salary}"/>
                             <GridViewColumn Header="Отдел"
                                             DisplayMemberBinding="{Binding Path=PersonPosition.PositionDepartment.Name}"/>
-                            <!--<GridViewColumn Header="Спец.работы"
-                                            DisplayMemberBinding="{Binding Path=SpecialWorks}"/>-->
+                            <GridViewColumn Header="Спец.работы"
+                                            DisplayMemberBinding="{Binding Path=SpecialWorks}"/>
                             <GridViewColumn Header="Дата рождения"
-                                            DisplayMemberBinding="{Binding Path=Birthday, StringFormat=dd.MM.yyyy}"/>
+                                            DisplayMemberBinding="{Binding Path=Birthday, StringFormat=dd.MM.yyyy, ConverterCulture=RU-ru}"/>
                             <GridViewColumn Header="Возраст"
                                             DisplayMemberBinding="{Binding Path=Age}"/>
                         </GridView>
